@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Douyin Live Caption Bridge by Tim Macy</title>
+    <style>
+        body {
+            max-width: 720px;
+            margin: 48px auto;
+            padding: 0 24px;
+            font: 16px/1.5 system-ui, sans-serif;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 14px;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        #status {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Douyin Live Caption Bridge</h1>
+    <p id="status">Starting...</p>
+    <audio id="audio" autoplay controls playsinline></audio>
+    <p><button id="stop" type="button">Stop bridge</button></p>
+    <script src="bridge.js"></script>
+</body>
+
+</html>
