@@ -67,4 +67,4 @@ Google documents Live Caption as processing audio and captions locally. Chrome's
 
 ## License
 
-Licensed under the MIT License.
+Licensed under the [MIT License](https://github.com/TimMacy/Douyin-LiveCaption-Bridge/blob/main/LICENSE).
