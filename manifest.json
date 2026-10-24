@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Douyin Live Caption Bridge",
-    "version": "3.0",
-    "description": "Routes Douyin Live tab audio through a local WebRTC stream so Chrome Live Caption can detect it.",
+    "version": "4.0",
+    "description": "Routes Douyin Live tab audio through Web Audio so Chrome Live Caption can detect it.",
     "permissions": [
         "activeTab",
         "tabCapture"
@@ -19,5 +19,5 @@
     "action": {
         "default_title": "Start Douyin Live Caption Bridge"
     },
-    "minimum_chrome_version": "116"
+    "minimum_chrome_version": "133"
 }
