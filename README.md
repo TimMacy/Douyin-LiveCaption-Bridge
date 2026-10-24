@@ -1,14 +1,22 @@
 # Douyin Live Caption Bridge
 
+<img align="right" width="49%" alt="Chrome" title="Chrome" src="https://github.com/user-attachments/assets/c1bac89a-fd36-44e3-bcce-fe84ed27cefb" />
+
 A Chrome extension that helps Chrome's built-in Live Caption recognize audio from Douyin livestreams.
 
-If a Douyin livestream plays without triggering Live Caption, click the extension to open a bridge tab. It captures the source tab's audio, passes it through a local WebRTC connection, and plays it back so Chrome can detect it for captioning.
+If a Douyin livestream plays without triggering Live Caption, click the extension to open a bridge tab. It captures the source tab's audio, plays it through Web Audio, and registers playback with Chrome's media controls.
 
 Chrome generates the captions and optional live translation. The extension doesn't create, save, or export transcripts.
 
+<p align="center">
+  <img width="49%" alt="Douyin Live Caption Bridge" title="Douyin Live Caption Bridge" src="https://github.com/user-attachments/assets/f59b830d-f158-4e25-bc79-fd10f6b25c8b" />
+</p>
+
+<br clear="all" />
+
 ## Requirements
 
-- Chrome 116 or later.
+- Chrome 133 or later.
 - Live Caption enabled in Chrome's accessibility settings, with the supported live caption language installed and selected.
 
 The extension was developed for use on macOS. Other environments haven't been verified.
@@ -28,10 +36,10 @@ The extension was developed for use on macOS. Other environments haven't been ve
 1. Open Chrome's **Settings > Accessibility** and turn on **Live Caption**. Add and select Chinese under **Supported Live Caption languages**.
 2. Open a Douyin livestream and start playback. Keep the source tab unmuted.
 3. While viewing the Douyin tab, click **Douyin Live Caption Bridge** in Chrome's toolbar or extensions menu.
-4. Keep the new bridge tab open. If its audio player doesn't start automatically, click **Play** once.
+4. Keep the new bridge tab open. If playback doesn't start automatically, click **Play** once.
 5. Return to Douyin. Chrome's Live Caption bubble should appear when it detects supported speech.
 
-The audio plays through the bridge tab while capture is active, and its audio controls allow playback volume adjustments.
+Chrome's toolbar media controls provide the **Live Caption** and **Live Translate** switches. Audio plays through the bridge tab while capture is active, with Play/Pause and volume controls available in the bridge tab.
 
 To start a new bridge, click the extension icon from a Douyin tab. To stop it, click **Stop bridge** or close the bridge tab.
 
@@ -52,8 +60,8 @@ Google documents Live Caption as processing audio and captions locally. Chrome's
 | Problem | What to check |
 | --- | --- |
 | No captions appear | Confirm Live Caption is enabled, the spoken language is available and selected, and the livestream contains audible speech. |
-| A Play prompt appears | Click the bridge audio player's Play button once. |
-| Audio becomes silent | Check the bridge player's volume and playback state. Close the bridge tab to stop capture, then retry from the playing Douyin tab. |
+| A Play prompt appears | Click the bridge tab's Play button once. |
+| Audio becomes silent | Check the bridge tab's volume and playback state. Close the bridge tab to stop capture, then retry from the playing Douyin tab. |
 | A capture error appears | Close the bridge tab and any other bridge for the same source, then invoke the extension again from Douyin. |
 | The bridge stops after closing the source tab | Open a livestream and start a new bridge from that tab. |
 
