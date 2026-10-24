@@ -1,6 +1,6 @@
 # Douyin Live Caption Bridge
 
-<img align="right" width="49%" alt="Chrome" title="Chrome" src="https://github.com/user-attachments/assets/c1bac89a-fd36-44e3-bcce-fe84ed27cefb" />
+<img align="right" width="45%" alt="Chrome" title="Chrome" src="https://github.com/user-attachments/assets/c1bac89a-fd36-44e3-bcce-fe84ed27cefb" />
 
 A Chrome extension that helps Chrome's built-in Live Caption recognize audio from Douyin livestreams.
 
@@ -9,7 +9,7 @@ If a Douyin livestream plays without triggering Live Caption, click the extensio
 Chrome generates the captions and optional live translation. The extension doesn't create, save, or export transcripts.
 
 <p align="center">
-  <img width="49%" alt="Douyin Live Caption Bridge" title="Douyin Live Caption Bridge" src="https://github.com/user-attachments/assets/f59b830d-f158-4e25-bc79-fd10f6b25c8b" />
+  <img width="45%" alt="Douyin Live Caption Bridge" title="Douyin Live Caption Bridge" src="https://github.com/user-attachments/assets/f59b830d-f158-4e25-bc79-fd10f6b25c8b" />
 </p>
 
 <br clear="all" />
