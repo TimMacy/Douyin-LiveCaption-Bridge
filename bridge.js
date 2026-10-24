@@ -1,12 +1,13 @@
 const params = new URLSearchParams(location.search);
 const sourceTabId = Number(params.get('sourceTabId'));
 const status = document.querySelector('#status');
-const audio = document.querySelector('#audio');
+const playback = document.querySelector('#playback');
+const volume = document.querySelector('#volume');
 const stop = document.querySelector('#stop');
 let capturedStream;
-let remoteStream;
-let sender;
-let receiver;
+let audioContext;
+let audioSource;
+let audioGain;
 let stopped = false;
 
 const fail = message => {
@@ -19,10 +20,35 @@ const stopBridge = () => {
     if (stopped) return;
     stopped = true;
     capturedStream?.getTracks().forEach(track => track.stop());
-    remoteStream?.getTracks().forEach(track => track.stop());
-    sender?.close();
-    receiver?.close();
-    audio.srcObject = null;
+    audioSource?.disconnect();
+    audioGain?.disconnect();
+    if (audioContext && audioContext.state !== 'closed') audioContext.close();
+    navigator.mediaSession.playbackState = 'none';
+    navigator.mediaSession.metadata = null;
+    navigator.mediaSession.setActionHandler('play', null);
+    navigator.mediaSession.setActionHandler('pause', null);
+    playback.disabled = true;
+    volume.disabled = true;
+};
+
+const updatePlaybackState = () => {
+    if (stopped) return;
+    const playing = audioContext.state === 'running';
+    playback.textContent = playing ? 'Pause' : 'Play';
+    navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+    status.textContent = playing
+        ? "Bridge is running. Live Caption and Live Translate are available from Chrome's toolbar media controls. Keep this tab open and return to the 抖音直播 tab."
+        : 'Playback paused. Click Play to resume.';
+};
+
+const resumePlayback = () => {
+    if (stopped || !audioContext) return;
+    audioContext.resume().then(updatePlaybackState, error => fail(error.message));
+};
+
+const pausePlayback = () => {
+    if (stopped || !audioContext) return;
+    audioContext.suspend().then(updatePlaybackState, error => fail(error.message));
 };
 
 const startLoopback = stream => {
@@ -32,46 +58,24 @@ const startLoopback = stream => {
     }
 
     capturedStream = stream;
-    sender = new RTCPeerConnection({ iceServers: [] });
-    receiver = new RTCPeerConnection({ iceServers: [] });
+    audioContext = new AudioContext({ latencyHint: 'interactive' });
+    audioSource = audioContext.createMediaStreamSource(stream);
+    audioGain = audioContext.createGain();
+    audioGain.gain.value = Number(volume.value);
+    audioSource.connect(audioGain);
+    audioGain.connect(audioContext.destination);
 
-    sender.onicecandidate = event => {
-        if (stopped || !event.candidate) return;
-        receiver.addIceCandidate(event.candidate).then(null, error => fail(error.message));
-    };
-
-    receiver.onicecandidate = event => {
-        if (stopped || !event.candidate) return;
-        sender.addIceCandidate(event.candidate).then(null, error => fail(error.message));
-    };
-
-    receiver.ontrack = event => {
-        if (stopped) return;
-        remoteStream = event.streams[0] || new MediaStream([event.track]);
-        audio.srcObject = remoteStream;
-
-        audio.play().then(() => {
-            if (stopped) return;
-            status.textContent = 'Bridge running. Chrome Live Caption should open from this tab. Keep it open and return to Douyin.';
-        }, () => {
-            if (stopped) return;
-            status.textContent = 'Click Play on the audio control once. Chrome Live Caption should then open.';
-        });
-    };
-
-    sender.onconnectionstatechange = receiver.onconnectionstatechange = () => {
-        if (sender.connectionState === 'failed' || receiver.connectionState === 'failed') fail('WebRTC connection failed.');
-    };
-
-    stream.getAudioTracks().forEach(track => sender.addTrack(track, stream));
-
-    sender.createOffer().then(offer => {
-        return sender.setLocalDescription(offer).then(() => receiver.setRemoteDescription(offer));
-    }).then(() => {
-        return receiver.createAnswer();
-    }).then(answer => {
-        return receiver.setLocalDescription(answer).then(() => sender.setRemoteDescription(answer));
-    }).then(null, error => fail(error.message));
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'Douyin Live Caption Bridge',
+        artist: 'Douyin Live'
+    });
+    navigator.mediaSession.setActionHandler('play', resumePlayback);
+    navigator.mediaSession.setActionHandler('pause', pausePlayback);
+    audioContext.onstatechange = updatePlaybackState;
+    playback.disabled = false;
+    volume.disabled = false;
+    status.textContent = 'Click Play once if playback does not start automatically.';
+    resumePlayback();
 
     stream.getAudioTracks()[0]?.addEventListener('ended', () => {
         if (stopped) return;
@@ -108,6 +112,15 @@ if (!Number.isSafeInteger(sourceTabId) || sourceTabId <= 0) {
         fail(error.message);
     });
 }
+
+playback.addEventListener('click', () => {
+    if (audioContext?.state === 'running') pausePlayback();
+    else resumePlayback();
+});
+
+volume.addEventListener('input', () => {
+    if (audioGain) audioGain.gain.value = Number(volume.value);
+});
 
 stop.addEventListener('click', () => {
     stopBridge();
