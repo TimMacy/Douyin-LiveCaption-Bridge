@@ -31,7 +31,7 @@ The extension was developed for use on macOS. Other environments haven't been ve
 
 **Douyin Live Caption Bridge** can be pinned to Chrome's toolbar from the extensions menu.
 
-## Use
+## How to Use
 
 1. Open Chrome's **Settings > Accessibility** and turn on **Live Caption**. Add and select Chinese under **Supported Live Caption languages**.
 2. Open a Douyin livestream and start playback. Keep the source tab unmuted.
