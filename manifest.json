@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Douyin Live Caption Bridge",
     "version": "4.0",
-    "description": "Routes Douyin Live tab audio through Web Audio so Chrome Live Caption can detect it.",
+    "description": "Routes Douyin Live tab audio through Web Audio to enable Chrome Live Caption and Live Translate.",
     "permissions": [
         "activeTab",
         "tabCapture"
