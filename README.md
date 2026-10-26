@@ -12,6 +12,10 @@ Chrome generates the captions and optional live translation. The extension doesn
   <img width="45%" alt="Douyin Live Caption Bridge" title="Douyin Live Caption Bridge" src="https://github.com/user-attachments/assets/f59b830d-f158-4e25-bc79-fd10f6b25c8b" />
 </p>
 
+<p align="center">
+<a href="https://chromewebstore.google.com/detail/douyin-live-caption-bridg/kfjcpheppaiancgbicgcmlkkdgmkhkej?authuser=0&hl=en"><img width="22%" alt="Chrome Browser Extension for Douyin Live Caption Bridge by Tim Macy" src="https://github.com/user-attachments/assets/d5abfdaa-ca15-4820-b533-85af1332ce4e"></a>
+</p>
+
 <br clear="all" />
 
 ## Requirements
